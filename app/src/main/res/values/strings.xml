@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="order_by_preference_title">Order Movies by</string>
+    <string name="sort_by_popularity_label">Popularity</string>
+    <string name="sort_by_highest_rated_label">Highest Rated</string>
+    <string name="sort_by_popularity_value" translatable="false">popular</string>
+    <string name="sort_by_highest_rated_value" translatable="false">top_rated</string>
+    <string name="title_activity_details">Details</string>
+
+    <string name="order_by_list_key" translatable="false">order_by_list</string>
+    <string name="title_key" translatable="false">title</string>
+    <string name="overview_key" translatable="false">overview</string>
+    <string name="vote_average_key" translatable="false">vote_average</string>
+    <string name="poster_path_key" translatable="false">poster_path</string>
+    <string name="release_year_key" translatable="false">release_year</string>
+    <string name="language_code">en-US</string>
+    <string name="poster_image_view_description">Movie Poster</string>
+    <string name="unexpected_error">Unexpected error.</string>
+    <string name="connection_error">Connection error.</string>
+    <string name="action_update">Update</string>
+</resources>

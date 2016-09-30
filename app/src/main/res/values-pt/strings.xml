@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Filmes Populares</string>
+    <string name="action_settings">Configurações</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="order_by_preference_title">Ordenar Filmes por</string>
+    <string name="sort_by_popularity_label">Popularidade</string>
+    <string name="sort_by_highest_rated_label">Melhor Avaliado</string>
+    <string name="title_activity_details">Detalhes</string>
+    <string name="language_code">pt-BR</string>
+    <string name="poster_image_view_description">Poster do Filme</string>
+    <string name="unexpected_error">Erro inesperado.</string>
+    <string name="connection_error">Erro de conexão.</string>
+    <string name="action_update">Atualizar</string>
+
+</resources>
