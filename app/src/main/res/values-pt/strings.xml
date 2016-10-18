@@ -12,5 +12,6 @@
     <string name="unexpected_error">Erro inesperado.</string>
     <string name="connection_error">Erro de conexão.</string>
     <string name="action_update">Atualizar</string>
-
+    <string name="toggle_popularity">Mostrar Mais Populares</string>
+    <string name="toggle_highest_rated">Mostrar Maiores Notas</string>
 </resources>

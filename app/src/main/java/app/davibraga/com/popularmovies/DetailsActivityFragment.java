@@ -18,6 +18,9 @@ import com.squareup.picasso.Picasso;
  */
 public class DetailsActivityFragment extends Fragment {
 
+    private static final int TITLE_BIG_SIZE = 35;
+    private static final float SMALLER_TEXT_SIZE = 25;
+
     public DetailsActivityFragment() {
     }
 
@@ -27,29 +30,32 @@ public class DetailsActivityFragment extends Fragment {
         final String maxGrade = "/10";
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
 
-
         Activity activity = getActivity();
         Intent intent = activity.getIntent();
         Resources res = activity.getResources();
 
+        MovieDB movieDB =  intent.getParcelableExtra(res.getString(R.string.movie_data_key));
 
         TextView titleTextView = (TextView) rootView.findViewById(R.id.titleTextView);
-        titleTextView.setText(intent.getStringExtra(res.getString(R.string.title_key)));
-
+        String title = movieDB.getTitle();
+        if (title.length() > TITLE_BIG_SIZE) {
+            titleTextView.setTextSize(SMALLER_TEXT_SIZE);
+        }
+        titleTextView.setText(title);
 
         TextView yearTextView = (TextView) rootView.findViewById(R.id.yearTextView);
-        yearTextView.setText(intent.getStringExtra(res.getString(R.string.release_year_key)));
+        yearTextView.setText(movieDB.getReleaseYear());
 
         TextView voteTextView = (TextView) rootView.findViewById(R.id.voteTextView);
-        String grade = intent.getStringExtra(res.getString(R.string.vote_average_key)) + maxGrade;
+        String grade = Double.toString(movieDB.getVoteAverage()).substring(0,3) + maxGrade;
         voteTextView.setText(grade);
 
         TextView overviewTextView = (TextView) rootView.findViewById(R.id.overviewTextView);
-        overviewTextView.setText(intent.getStringExtra(res.getString(R.string.overview_key)));
+        overviewTextView.setText(movieDB.getOverview());
 
         ImageView posterImageView = (ImageView) rootView.findViewById(R.id.posterImageView);
         Picasso.with(getContext())
-                .load(intent.getStringExtra(res.getString(R.string.poster_path_key)))
+                .load(movieDB.getPosterPath())
                 .into(posterImageView);
 
         return rootView;

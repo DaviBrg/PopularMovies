@@ -3,7 +3,6 @@ package app.davibraga.com.popularmovies;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -56,7 +54,9 @@ public class DiscoveryActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        GridView rootView = (GridView) inflater.inflate(R.layout.fragment_discovery, container, false);
+        GridView rootView = (GridView) inflater.inflate(R.layout.fragment_discovery,
+                container,
+                false);
 
 
         movieDBAdapter = new MovieDBAdapter(getActivity(),new ArrayList<MovieDB>());
@@ -66,13 +66,16 @@ public class DiscoveryActivityFragment extends Fragment {
         return rootView;
     }
 
-    private void updateGrid() {
+    String getCurrentOrderCriteria() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String defautOrderCriteria = getResources().getString(R.string.sort_by_popularity_value);
-        String orderCriteria = sharedPref.getString(
+        return  sharedPref.getString(
                 getResources().getString(R.string.order_by_list_key),
                 defautOrderCriteria);
-        new UpdateGridTask().execute(orderCriteria);
+    }
+
+    private void updateGrid() {
+        new UpdateGridTask().execute(getCurrentOrderCriteria());
     }
 
     @Override
@@ -136,59 +139,12 @@ public class DiscoveryActivityFragment extends Fragment {
         }
     }
 
-    class MovieDB {
-
-        static private final String TITLE_FIELD = "title";
-        static private final String OVERVIEW_FIELD = "overview";
-        static private final String VOTE_AVERAGE_FIELD = "vote_average";
-        static private final String POSTER_PATH_FIELD = "poster_path";
-        static private final String RELEASE_DATE_FIELD = "release_date";
-        static private final String POSTER_PATH_URL = "http://image.tmdb.org/t/p/w185";
-
-        private String title;
-        private String overview;
-        private double voteAverage;
-        private String posterPath;
-        private String releaseYear;
-        JSONObject jsonObject;
-
-        public MovieDB(JSONObject movieJasonObject) throws JSONException {
-        this.jsonObject = movieJasonObject;
-            title = movieJasonObject.getString(TITLE_FIELD);
-            overview = movieJasonObject.getString(OVERVIEW_FIELD);
-            voteAverage = movieJasonObject.getDouble(VOTE_AVERAGE_FIELD);
-            posterPath = POSTER_PATH_URL + movieJasonObject.getString(POSTER_PATH_FIELD);
-            releaseYear = movieJasonObject.getString(RELEASE_DATE_FIELD).substring(0,4);
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getOverview() {
-            return overview;
-        }
-
-        public double getVoteAverage() {
-            return voteAverage;
-        }
-
-        public String getPosterPath() {
-            return posterPath;
-        }
-
-        public String getReleaseYear() {
-            return releaseYear;
-        }
-
-    }
-
     URL getMoviesURL(String orderCriteria) {
         final String SCHEME = "http";
         final String MOVIE_AUTHORITY = "api.themoviedb.org";
         final String MOVIE_PATH = "/3/movie/";
         final String API_KEY_FIELD = "api_key";
-        final String API_KEY_VALUE = "INSERT YOUR KEY HERE";
+        final String API_KEY_VALUE = "645d19544dbaf839eb48f98e561347bc";
         final String LANGUAGE_FIELD = "language";
 
         URL url = null;
@@ -254,24 +210,7 @@ public class DiscoveryActivityFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(),DetailsActivity.class);
-
-                    Resources res = getActivity().getResources();
-
-                    intent.putExtra(res.getString(R.string.title_key),
-                            movieDB.getTitle());
-
-                    intent.putExtra(res.getString(R.string.overview_key),
-                            movieDB.getOverview());
-
-                    intent.putExtra(res.getString(R.string.vote_average_key),
-                            Double.toString(movieDB.getVoteAverage()).substring(0,3));
-
-                    intent.putExtra(res.getString(R.string.poster_path_key),
-                            movieDB.getPosterPath());
-
-                    intent.putExtra(getString(R.string.release_year_key),
-                            movieDB.getReleaseYear());
-
+                    intent.putExtra(getString(R.string.movie_data_key), movieDB);
                     startActivity(intent);
                 }
             });
@@ -280,15 +219,64 @@ public class DiscoveryActivityFragment extends Fragment {
         }
     }
 
+    boolean isOrderPopularity() {
+        String popularityOrder = getResources().getString(R.string.sort_by_popularity_value);
+        return getCurrentOrderCriteria().equals(popularityOrder);
+    }
+
+    boolean isOrderHighestRated() {
+        String highestRatedOrder = getResources().getString(R.string.sort_by_highest_rated_value);
+        return getCurrentOrderCriteria().equals(highestRatedOrder);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_discovery_fragment, menu);
+
+        if (isOrderPopularity()) {
+            String highestRatedTitle = getResources().getString(R.string.toggle_highest_rated);
+            menu.findItem(R.id.action_toggle).setTitle(highestRatedTitle);
+
+        }
+        else if(isOrderHighestRated()) {
+            String popularityTitle = getResources().getString(R.string.toggle_popularity);
+            menu.findItem(R.id.action_toggle).setTitle(popularityTitle);
+        }
+
     }
+
+    private void setOrderBy(String order) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPref.edit()
+                .putString(getResources().getString(R.string.order_by_list_key),order)
+                .apply();
+    }
+
+    private void setOrderByPopularity(){
+        String order = getResources().getString(R.string.sort_by_popularity_value);
+        setOrderBy(order);
+    }
+
+    private void setOrderByHighestRated() {
+        String order = getResources().getString(R.string.sort_by_highest_rated_value);
+        setOrderBy(order);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id ==  R.id.action_update) {
+        if (id == R.id.action_toggle  && isOrderHighestRated()) {
+            setOrderByPopularity();
+            String newTitle = getResources().getString(R.string.toggle_highest_rated);
+            item.setTitle(newTitle);
+            updateGrid();
+            return true;
+        }
+        if (id == R.id.action_toggle  && isOrderPopularity()) {
+            setOrderByHighestRated();
+            String newTitle = getResources().getString(R.string.toggle_popularity);
+            item.setTitle(newTitle);
             updateGrid();
             return true;
         }

@@ -13,6 +13,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="DetailsText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center|start</item>
+        <item name="android:padding">@dimen/little_margin</item>
+        <item name="android:height">@dimen/medium_text_height</item>
+        <item name="android:layout_toRightOf">@+id/posterImageView</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

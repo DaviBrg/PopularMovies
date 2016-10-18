@@ -10,14 +10,12 @@
     <string name="title_activity_details">Details</string>
 
     <string name="order_by_list_key" translatable="false">order_by_list</string>
-    <string name="title_key" translatable="false">title</string>
-    <string name="overview_key" translatable="false">overview</string>
-    <string name="vote_average_key" translatable="false">vote_average</string>
-    <string name="poster_path_key" translatable="false">poster_path</string>
-    <string name="release_year_key" translatable="false">release_year</string>
     <string name="language_code">en-US</string>
     <string name="poster_image_view_description">Movie Poster</string>
     <string name="unexpected_error">Unexpected error.</string>
     <string name="connection_error">Connection error.</string>
     <string name="action_update">Update</string>
+    <string name="movie_data_key" translatable="false">movie_data_key</string>
+    <string name="toggle_popularity">Show Most Popular</string>
+    <string name="toggle_highest_rated">Show Highest Rated</string>
 </resources>

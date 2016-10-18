@@ -11,9 +11,9 @@
 
         <ImageView
             android:contentDescription="@string/poster_image_view_description"
-            android:padding="10dp"
-            android:layout_width="150dp"
-            android:layout_height="225dp"
+            android:padding="@dimen/little_margin"
+            android:layout_width="@dimen/detail_poster_width"
+            android:layout_height="@dimen/detail_poster_height"
             android:id="@+id/posterImageView"
             android:layout_below="@+id/titleTextView"
             android:layout_alignParentLeft="true"
@@ -23,11 +23,12 @@
             android:textColor="@color/white"
             android:background="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_height="@dimen/title_bar_height"
             android:id="@+id/titleTextView"
-            android:textSize="30sp"
+            android:textSize="@dimen/big_text_size"
             android:gravity="center|start"
-            android:padding="20dp"
+            android:padding="@dimen/activity_vertical_margin"
+            android:paddingBottom="20dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -35,32 +36,16 @@
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:textSize="20sp"
+            style="@style/DetailsText"
+            android:textSize="@dimen/medium_text_size"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/yearTextView"
-            android:layout_toRightOf="@+id/posterImageView"
-            android:layout_toEndOf="@+id/posterImageView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/posterImageView"
-            android:height="50dp"
-            android:gravity="center|start"
-            android:padding="10dp" />
+            android:layout_alignTop="@+id/posterImageView" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/DetailsText"
             android:id="@+id/voteTextView"
-            android:layout_toRightOf="@+id/posterImageView"
-            android:layout_toEndOf="@+id/posterImageView"
-            android:layout_below="@+id/yearTextView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:height="50dp"
-            android:gravity="center|start"
-            android:padding="10dp"/>
+            android:layout_below="@+id/yearTextView" />
 
         <TextView
             android:layout_width="match_parent"
@@ -69,7 +54,7 @@
             android:layout_below="@+id/posterImageView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:padding="10dp"
+            android:padding="@dimen/little_margin"
             android:textColor="@color/black"/>
     </RelativeLayout>
 </ScrollView>
